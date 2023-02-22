@@ -7,8 +7,8 @@
  * board fills (tie)
  */
 
-var WIDTH = 7;
-var HEIGHT = 6;
+const WIDTH = 7; 
+const HEIGHT = 6; 
 
 var currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -20,14 +20,23 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   // this was a previous attempt at making the board array
-  const row = new Array(WIDTH).fill(null);
+  /*const row = new Array(WIDTH).fill(null);
   let i = 0;
   while (i < HEIGHT) {
     board.push(row);
     i++;
-  }
+  }*/
   // const wholeBoard = [...Array(WIDTH)].map(() => Array(HEIGHT));
-  board.push(wholeBoard);
+
+  for (let y = 0; y < HEIGHT; y++) { 
+    const row = [];
+
+    for (let x = 0; x < WIDTH; x++) { 
+      row.push(null);
+    }
+    board.push(row);
+  }
+  //board.push(wholeBoard);
 }
 
 console.log("board=", board);
@@ -54,10 +63,10 @@ function makeHtmlBoard() {
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
-  for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
     const row = document.createElement('tr');
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) { 
       // TODO: Create a table cell element and assign to a "cell" variable
       const cell = document.createElement('td');
       // TODO: add an id, c-y-x, to the above table cell element
@@ -75,13 +84,24 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  return 5;
+  
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
+  console.log(x);
+  console.log(y);
   // TODO: make a div and insert into correct table cell
+  const pieceToPlace = document.createElement("div");
+  pieceToPlace.classList.add("piece");
+  pieceToPlace.classList.add(`player-${currPlayer}`);
+  const place = document.getElementById(`c-${y}-${x}`);
+  console.log(place);
+  place.append(pieceToPlace);
+
+  
+
 }
 
 /** endGame: announce game end */
