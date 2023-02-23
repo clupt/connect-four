@@ -10,7 +10,7 @@
 const WIDTH = 7;
 const HEIGHT = 6;
 
-var currPlayer = 1; // active player: 1 or 2
+let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
@@ -51,8 +51,6 @@ function makeHtmlBoard() {
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
-  // TODO: add comment for this code
-  //
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", `top-${x}`);
@@ -87,6 +85,8 @@ function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
   for (let y = HEIGHT - 1; y >= 0; y--) {
     //console.log("board[y][x] =", board[y][x]);
+
+    console.log("currPlayer inside of findSpot=", currPlayer);
     if (board[y][x] === null) {
       console.log("x in find spot in col=", x);
       console.log("y in find spot in col=", y);
@@ -109,35 +109,31 @@ function placeInTable(y, x) {
   const place = document.getElementById(`c-${y}-${x}`);
   console.log(place);
   place.append(pieceToPlace);
-
-
-
 }
 
 /** endGame: announce game end */
-
+//we would update this alert to handle a tie if there was more time
 function endGame(msg) {
-  // TODO: pop up alert message
   //temporary alert message
-  alert('Game over');
+  alert(`Game over player ${currPlayer} wins`);
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = Number(evt.target.id.slice(-1));
+  const x = Number(evt.target.id.slice(-1));
   // console.log("evt.target.id=", evt.target.id);
   // console.log("+evt.target.id=", +evt.target.id);
   console.log("x in handleClick=", x);
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  const y = findSpotForCol(x);
   if (y === null) {
     return;
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+
   board[y][x] = currPlayer;
   console.log("board", board[y][x]);
   placeInTable(y, x);
@@ -148,18 +144,14 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
   console.log("board in evt=", board);
-  // if (board.every(el => el !== null)) {
-  //   endGame();
-  // }
   //Uses top row to check if last cell is filled and triggers endGame function
   if (board[0].every(el => el !== null)) {
     endGame();
   }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
+
   if (currPlayer === 1) {
     currPlayer = 2;
   } else {
@@ -179,8 +171,8 @@ function checkForWin() {
    */
   function _win(cells) {
     //console.log("CELLS", cells)
-    return cells.every(([y,x]) =>{
-      return ((y<HEIGHT && y>=0) && (x<WIDTH && x>=0)) && (board[y][x]===currPlayer);
+    return cells.every(([y, x]) => {
+      return ((y < HEIGHT && y >= 0) && (x < WIDTH && x >= 0)) && (board[y][x] === currPlayer);
 
     });
     /*for(let i=0; i<cells.length; i++){
@@ -209,8 +201,8 @@ function checkForWin() {
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
       let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      let diagDL = [[y, x], [y + 1, x+1], [y + 2, x+2], [y + 3, x+3]];
-      let diagDR= [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      let diagDL = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      let diagDR = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
       //console.log("diag", diagDL);
 
       // find winner (only checking each win-possibility as needed)

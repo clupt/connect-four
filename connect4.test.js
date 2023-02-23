@@ -83,9 +83,9 @@ describe('placeInTable', function () {
     const y = HEIGHT - 1;
     const spot = document.getElementById(`c-${y}-${x}`);
 
-    expect(spot.innerHTML).toEqual("")
+    expect(spot.innerHTML).toEqual("");
     placeInTable(y, x);
-    expect(spot.innerHTML).toEqual(`<div class="piece p${currPlayer}"></div>`)
+    expect(spot.innerHTML).toEqual(`<div class="piece p${currPlayer}"></div>`);
   });
 });
 
@@ -112,7 +112,7 @@ describe('handleClick', function () {
 
     // spot on board is empty
     // after one call to handleClick, gets updated with player 1
-    expect(board[y][x]).toEqual(undefined);
+    expect(board[y][x]).toEqual(null);
     handleClick(evt);
     expect(board[y][x]).toEqual(1);
 
@@ -121,7 +121,7 @@ describe('handleClick', function () {
 
     // spot on board is empty
     // after next call to handleClick, gets updated with player 2
-    expect(board[y][x]).toEqual(undefined);
+    expect(board[y][x]).toEqual(null);
     handleClick(evt);
     expect(board[y][x]).toEqual(2);
   });
@@ -135,9 +135,9 @@ describe('handleClick', function () {
 
     // spot on html board empty
     // after one call to handleClick, gets updated with player 1 piece
-    expect(spot.innerHTML).toEqual("")
+    expect(spot.innerHTML).toEqual("");
     handleClick(evt);
-    expect(spot.innerHTML).toEqual('<div class="piece p1"></div>')
+    expect(spot.innerHTML).toEqual('<div class="piece p1"></div>');
 
     // increment y to next empty row for x
     // get new spot
@@ -146,9 +146,9 @@ describe('handleClick', function () {
 
     // spot on html board empty
     // after next call to handleClick, gets updated with player 2 piece
-    expect(spot.innerHTML).toEqual("")
+    expect(spot.innerHTML).toEqual("");
     handleClick(evt);
-    expect(spot.innerHTML).toEqual('<div class="piece p2"></div>')
+    expect(spot.innerHTML).toEqual('<div class="piece p2"></div>');
   });
 });
 
