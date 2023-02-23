@@ -86,7 +86,7 @@ function findSpotForCol(x) {
   // console.log("x in findSpotForCol=", x);
   // TODO: write the real version of this, rather than always returning 5
   for (let y = HEIGHT - 1; y >= 0; y--) {
-    console.log("board[y][x] =", board[y][x]);
+    //console.log("board[y][x] =", board[y][x]);
     if (board[y][x] === null) {
       console.log("x in find spot in col=", x);
       console.log("y in find spot in col=", y);
@@ -105,7 +105,7 @@ function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   const pieceToPlace = document.createElement("div");
   pieceToPlace.classList.add("piece");
-  pieceToPlace.classList.add(`player-${currPlayer}`);
+  pieceToPlace.classList.add(`p${currPlayer}`);
   const place = document.getElementById(`c-${y}-${x}`);
   console.log(place);
   place.append(pieceToPlace);
@@ -164,6 +164,7 @@ function handleClick(evt) {
   } else {
     currPlayer = 1;
   }
+  console.log("current player", currPlayer);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -176,11 +177,24 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
+    console.log("CELLS", cells)
+    return cells.every(([y,x]) =>{
+      return ((y<HEIGHT && y>=0) && (x<WIDTH && x>=0)) && (board[y][x]===currPlayer);
 
-    // TODO: Check four cells to see if they're all legal & all color of current
-    // player
+    });
+    /*for(let i=0; i<cells.length; i++){
+      for(let j=0; j<i.length; j++){
+        if(cells)
+
+      }*/
 
   }
+
+
+  // TODO: Check four cells to see if they're all legal & all color of current
+  // player
+
+
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
   // for 4 cells (starting here) for each of the different
@@ -193,9 +207,10 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
-      let diagDL;
-      let diagDR;
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x], [y + 1, x+1], [y + 2, x+2], [y + 3, x+3]];
+      let diagDR= [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      console.log("diag", diagDL);
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
