@@ -118,6 +118,8 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  //temporary alert message
+  alert('Game over');
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -146,6 +148,14 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  console.log("board in evt=", board);
+  // if (board.every(el => el !== null)) {
+  //   endGame();
+  // }
+  //Uses top row to check if last cell is filled and triggers endGame function
+  if (board[0].every(el => el !== null)) {
+    endGame();
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
