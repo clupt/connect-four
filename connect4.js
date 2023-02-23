@@ -7,8 +7,8 @@
  * board fills (tie)
  */
 
-const WIDTH = 7; 
-const HEIGHT = 6; 
+const WIDTH = 7;
+const HEIGHT = 6;
 
 var currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -28,10 +28,10 @@ function makeBoard() {
   }*/
   // const wholeBoard = [...Array(WIDTH)].map(() => Array(HEIGHT));
 
-  for (let y = 0; y < HEIGHT; y++) { 
+  for (let y = 0; y < HEIGHT; y++) {
     const row = [];
 
-    for (let x = 0; x < WIDTH; x++) { 
+    for (let x = 0; x < WIDTH; x++) {
       row.push(null);
     }
     board.push(row);
@@ -66,7 +66,7 @@ function makeHtmlBoard() {
   for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
     const row = document.createElement('tr');
-    for (let x = 0; x < WIDTH; x++) { 
+    for (let x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
       const cell = document.createElement('td');
       // TODO: add an id, c-y-x, to the above table cell element
@@ -83,9 +83,19 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
 
 function findSpotForCol(x) {
+  // console.log("x in findSpotForCol=", x);
   // TODO: write the real version of this, rather than always returning 5
-  
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    console.log("board[y][x] =", board[y][x]);
+    if (board[y][x] === null) {
+      console.log("x in find spot in col=", x);
+      console.log("y in find spot in col=", y);
+      return y;
+    }
+  }
+  return null;
 }
+
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
@@ -100,7 +110,7 @@ function placeInTable(y, x) {
   console.log(place);
   place.append(pieceToPlace);
 
-  
+
 
 }
 
@@ -114,8 +124,10 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
-
+  var x = Number(evt.target.id.slice(-1));
+  // console.log("evt.target.id=", evt.target.id);
+  // console.log("+evt.target.id=", +evt.target.id);
+  console.log("x in handleClick=", x);
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
   if (y === null) {
@@ -124,6 +136,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
