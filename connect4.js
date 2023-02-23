@@ -139,6 +139,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   board[y][x] = currPlayer;
+  console.log("board", board[y][x]);
   placeInTable(y, x);
 
   // check for win
@@ -177,7 +178,7 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
-    console.log("CELLS", cells)
+    //console.log("CELLS", cells)
     return cells.every(([y,x]) =>{
       return ((y<HEIGHT && y>=0) && (x<WIDTH && x>=0)) && (board[y][x]===currPlayer);
 
@@ -210,7 +211,7 @@ function checkForWin() {
       let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
       let diagDL = [[y, x], [y + 1, x+1], [y + 2, x+2], [y + 3, x+3]];
       let diagDR= [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-      console.log("diag", diagDL);
+      //console.log("diag", diagDL);
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
